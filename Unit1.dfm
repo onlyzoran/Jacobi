@@ -19,9 +19,9 @@ object Form1: TForm1
     Top = 0
     Width = 1000
     Height = 500
-    ActivePage = TabSheet2
+    ActivePage = TabSheet1
     PopupMenu = PopupMenu1
-    TabIndex = 1
+    TabIndex = 0
     TabOrder = 0
     object TabSheet1: TTabSheet
       Caption = #1056#1077#1096#1077#1085#1080#1077
@@ -140,14 +140,14 @@ object Form1: TForm1
     object TabSheet2: TTabSheet
       Caption = #1055#1086#1076#1088#1086#1073#1085#1086
       ImageIndex = 1
-      object GroupBox3: TGroupBox
-        Left = 0
+      object GroupBox4: TGroupBox
+        Left = 520
         Top = 0
         Width = 345
         Height = 153
-        Caption = 'AT'
+        Caption = 'a'
         TabOrder = 0
-        object StringGrid2: TStringGrid
+        object StringGrid3: TStringGrid
           Left = 8
           Top = 16
           Width = 329
@@ -157,30 +157,13 @@ object Form1: TForm1
           TabOrder = 0
         end
       end
-      object GroupBox4: TGroupBox
-        Left = 0
-        Top = 160
-        Width = 345
-        Height = 145
-        Caption = 'ATA'
-        TabOrder = 1
-        object StringGrid3: TStringGrid
-          Left = 8
-          Top = 16
-          Width = 329
-          Height = 121
-          FixedCols = 0
-          FixedRows = 0
-          TabOrder = 0
-        end
-      end
       object GroupBox5: TGroupBox
-        Left = 0
-        Top = 312
-        Width = 345
+        Left = 872
+        Top = 0
+        Width = 113
         Height = 153
-        Caption = 'ATb'
-        TabOrder = 2
+        Caption = 'b'
+        TabOrder = 1
         object StringGrid4: TStringGrid
           Left = 8
           Top = 16
@@ -193,16 +176,16 @@ object Form1: TForm1
         end
       end
       object GroupBox6: TGroupBox
-        Left = 352
+        Left = 0
         Top = 0
-        Width = 633
+        Width = 513
         Height = 153
         Caption = #1055#1088#1080#1074#1077#1076#1077#1085#1085#1072#1103' '#1089#1080#1089#1090#1077#1084#1072
-        TabOrder = 3
+        TabOrder = 2
         object Memo1: TMemo
           Left = 8
           Top = 16
-          Width = 617
+          Width = 497
           Height = 129
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -216,16 +199,16 @@ object Form1: TForm1
         end
       end
       object GroupBox7: TGroupBox
-        Left = 352
+        Left = 0
         Top = 160
-        Width = 633
+        Width = 985
         Height = 305
         Caption = #1048#1090#1077#1088#1072#1094#1080#1080
-        TabOrder = 4
+        TabOrder = 3
         object StringGrid5: TStringGrid
           Left = 8
           Top = 16
-          Width = 617
+          Width = 969
           Height = 281
           RowCount = 1
           FixedRows = 0

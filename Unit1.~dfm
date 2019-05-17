@@ -3,7 +3,7 @@ object Form1: TForm1
   Top = 161
   Width = 1016
   Height = 539
-  Caption = #1047#1077#1081#1076#1077#1083#1100
+  Caption = #1071#1082#1086#1073#1080
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -141,7 +141,7 @@ object Form1: TForm1
       Caption = #1055#1086#1076#1088#1086#1073#1085#1086
       ImageIndex = 1
       object GroupBox3: TGroupBox
-        Left = 0
+        Left = 640
         Top = 0
         Width = 345
         Height = 153
@@ -162,7 +162,7 @@ object Form1: TForm1
         Top = 160
         Width = 345
         Height = 145
-        Caption = 'ATA'
+        Caption = 'a'
         TabOrder = 1
         object StringGrid3: TStringGrid
           Left = 8
@@ -179,7 +179,7 @@ object Form1: TForm1
         Top = 312
         Width = 345
         Height = 153
-        Caption = 'ATb'
+        Caption = 'b'
         TabOrder = 2
         object StringGrid4: TStringGrid
           Left = 8
@@ -193,7 +193,7 @@ object Form1: TForm1
         end
       end
       object GroupBox6: TGroupBox
-        Left = 352
+        Left = 0
         Top = 0
         Width = 633
         Height = 153

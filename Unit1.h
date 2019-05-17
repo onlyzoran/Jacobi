@@ -26,7 +26,6 @@ __published:	// IDE-managed Components
         TPopupMenu *PopupMenu1;
         TMenuItem *N11;
         TButton *Button1;
-        TStringGrid *StringGrid2;
         TStringGrid *StringGrid3;
         TStringGrid *StringGrid4;
         TMemo *Memo1;
@@ -38,7 +37,6 @@ __published:	// IDE-managed Components
         TGroupBox *GroupBox1;
         TGroupBox *GroupBox2;
         TStringGrid *StringGrid6;
-        TGroupBox *GroupBox3;
         TGroupBox *GroupBox4;
         TGroupBox *GroupBox5;
         TGroupBox *GroupBox6;

@@ -50,18 +50,18 @@ void __fastcall TForm1::N11Click(TObject *Sender)
                 StringGrid1->Cells[i][0] = "x" + IntToStr(i + 1);
         }
         StringGrid1->Cells[StringGrid1->ColCount - 1][0] = "y";
-        StringGrid1->Cells[0][1] = 3.6;
-        StringGrid1->Cells[1][1] = 1.8;
-        StringGrid1->Cells[2][1] = -4.7;
-        StringGrid1->Cells[3][1] = 3.8;
-        StringGrid1->Cells[0][2] = 2.7;
-        StringGrid1->Cells[1][2] = -3.6;
-        StringGrid1->Cells[2][2] = 1.9;
-        StringGrid1->Cells[3][2] = 0.4;
-        StringGrid1->Cells[0][3] = 1.5;
-        StringGrid1->Cells[1][3] = 4.5;
-        StringGrid1->Cells[2][3] = 3.3;
-        StringGrid1->Cells[3][3] = -1.6;
+        StringGrid1->Cells[0][1] = 8;
+        StringGrid1->Cells[1][1] = 1;
+        StringGrid1->Cells[2][1] = -4;
+        StringGrid1->Cells[3][1] = 6;
+        StringGrid1->Cells[0][2] = 2;
+        StringGrid1->Cells[1][2] = -6;
+        StringGrid1->Cells[2][2] = 1;
+        StringGrid1->Cells[3][2] = -9;
+        StringGrid1->Cells[0][3] = -1;
+        StringGrid1->Cells[1][3] = 1;
+        StringGrid1->Cells[2][3] = 4;
+        StringGrid1->Cells[3][3] = 5;
 }
 //---------------------------------------------------------------------------
 void __fastcall TForm1::Button1Click(TObject *Sender)
@@ -79,6 +79,109 @@ void __fastcall TForm1::Button1Click(TObject *Sender)
         }
         if(fullStringGrid1 == true)
         {
+                int varN = (int)(CSpinEdit1->Value);
+                //Приведение начало
+                float massA[20][20];
+                float massB[20];
+                for(int i = 0; i < varN; i++)
+	        {
+                        for(int j = 0; j < varN; j++)
+	                {
+                                massA[i][j] = (StrToFloat)(StringGrid1->Cells[j][i + 1]);
+                        }
+                        massB[i] = (StrToFloat)(StringGrid1->Cells[varN][i + 1]);;
+                }
+                float massAP[20][20];
+                for(int i = 0; i < varN; i++)
+	        {
+                        massAP[i][0] = massB[i] / massA[i][i];
+	                String str = "x" + (IntToStr)(i + 1) + " = " + FloatToStr(massAP[i][0]);
+	                for(int j = 0; j < varN; j++)
+	                {
+	                        if(i != j)
+	                        {
+                                        massAP[i][j] = massA[i][j] / massA[i][i] * -1;
+	                                if((massAP[i][j]) > 0)
+	                                {
+	                                        str = str + "+";
+	                                }
+	                                str = str + FloatToStrF(massAP[i][j], ffGeneral, 4, 2) + "x" + (j + 1);
+	                        }
+	                }
+	                Memo1->Lines->Add(str);
+	                str = "";
+	        }
+                //Приведение конец
+                //Приведение в матричной форме начало
+                float massAPa[20][20];
+                float massAPb[20];
+                StringGrid3->ColCount = varN;
+	        StringGrid3->RowCount = varN;
+                StringGrid4->RowCount = varN;
+                for(int i = 0; i < varN; i++)
+	        {
+                        massAPb[i] = massB[i] / massA[i][i];
+                        StringGrid4->Cells[0][i] = FloatToStrF(massAPb[i], ffGeneral, 4, 2);
+                        massAPa[i][i] = 0;
+	                for(int j = 0; j < varN; j++)
+	                {
+	                        if(i != j)
+	                        {
+                                        massAPa[i][j] = massA[i][j] / massA[i][i] * -1;
+	                        }
+                                StringGrid3->Cells[j][i] = massAPa[i][j];
+	                }
+	        }
+                //Приведение в матричной форме конец
+                //Итерации начало
+                StringGrid5->ColCount = varN * 2 + 2;
+	        StringGrid5->RowCount = 1;
+                for(int i = 0; i < varN; i++)
+                {
+	                StringGrid5->Cells[i + 1][0] = "x" + IntToStr(i + 1);
+	                StringGrid5->Cells[i + varN + 1][0] = "e" + IntToStr(i + 1);
+                }
+                StringGrid5->Cells[varN * 2 + 1][0] = "eMax";
+                float massX[100][20];
+                float massE[100][20];
+                float massEMax[100];
+                for(int i = 0; i < varN; i++)
+                {
+                        massX[i][1] = massAPb[i];
+                        StringGrid5->RowCount++;
+                        StringGrid5->Cells[0][1] = 1;
+                        StringGrid5->Cells[i + 1][1] = massX[i][1];
+                        massE[i][1] = massX[i][1];
+                        StringGrid5->Cells[i + varN + 1][1] = massX[i][1];
+                }
+                massEMax[1] = massE[1][1];
+                for(int i = 1; i < varN; i++)
+                {
+                        if(massEMax[1] < massE[1][1])
+                        {
+                                massEMax[1] = massE[1][1];
+                        }
+                }
+                StringGrid5->Cells[varN * 2 + 1][1] = massEMax[1];
+                StringGrid5->FixedRows = 1;
+                for(int i = 1; i < 2; i++)
+                {
+                        StringGrid5->RowCount++;
+                        for(int j = 0; j < varN; j++)
+                        {
+                                massX[j][i] = massAPb[j];
+                                for(int k = 0; k < varN; k++)
+                                {
+                                        if(j != k)
+                                        {
+                                                massX[j][i] = massX[k][j] + massAPa[k][i] * massX[k][i - 1];
+                                                ShowMessage(massX[k][i]);
+                                        }
+                                }
+                                StringGrid5->Cells[j + 1][i + 1] = massX[j][i];
+                        }
+                }
+                //Итерации конец
 	        StringGrid2->ColCount = StringGrid1->ColCount - 1;
 	        StringGrid2->RowCount = StringGrid1->RowCount - 1;
 	        for(int i = 0; i < (StringGrid1->RowCount - 1); i++)
@@ -88,8 +191,8 @@ void __fastcall TForm1::Button1Click(TObject *Sender)
 	                        StringGrid2->Cells[j][i] = StringGrid1->Cells[i][j + 1];
 	                }
 	        }
-	        StringGrid3->ColCount = StringGrid2->ColCount;
-	        StringGrid3->RowCount = StringGrid2->RowCount;
+	        //StringGrid3->ColCount = StringGrid2->ColCount;
+	        //StringGrid3->RowCount = StringGrid2->RowCount;
 	        for(int i = 0; i < StringGrid3->RowCount; i++)
 	        {
 	                for(int k = 0; k < StringGrid3->ColCount; k++)
@@ -99,105 +202,103 @@ void __fastcall TForm1::Button1Click(TObject *Sender)
 	                        {
 	                                s = s + StringGrid2->Cells[j][i] * StringGrid1->Cells[k][j + 1];
 	                        }
-	                        StringGrid3->Cells[k][i] = FloatToStrF(s, ffGeneral, 4, 2);
+	                        //StringGrid3->Cells[k][i] = FloatToStrF(s, ffGeneral, 4, 2);
 	                }
 	        }
-	        StringGrid4->RowCount = StringGrid3->RowCount;
-	        for(int i = 0; i < StringGrid4->RowCount; i++)
+	        //StringGrid4->RowCount = StringGrid3->RowCount;
+	        //for(int i = 0; i < StringGrid4->RowCount; i++)
 	        {
-	                float s = 0;
-	                for(int j = 0; j < StringGrid3->ColCount; j++)
+	                //float s = 0;
+	                //for(int j = 0; j < StringGrid3->ColCount; j++)
 	                {
-	                        s = s + StringGrid2->Cells[j][i] * StringGrid1->Cells[StringGrid1->ColCount - 1][j + 1];
+	                        //s = s + StringGrid2->Cells[j][i] * StringGrid1->Cells[StringGrid1->ColCount - 1][j + 1];
 	                }
-	                StringGrid4->Cells[0][i] = FloatToStrF(s, ffGeneral, 4, 2);
+	                //StringGrid4->Cells[0][i] = FloatToStrF(s, ffGeneral, 4, 2);
 	        }
-	        float ax[20][20];
-	        float ay[20];
-	        int n = StringGrid3->RowCount;
-	        for(int i = 0; i < n; i++)
+	        //float ax[20][20];
+	        //float ay[20];
+	        //int n = StringGrid3->RowCount;
+	        //for(int i = 0; i < n; i++)
 	        {
-	                for(int j = 0; j < n; j++)
+	                //for(int j = 0; j < n; j++)
 	                {
-	                        ax[i][j] = StrToFloat(StringGrid3->Cells[j][i]);
+	                        //ax[i][j] = StrToFloat(StringGrid3->Cells[j][i]);
 	                }
-	                ay[i] = StrToFloat(StringGrid4->Cells[0][i]);
+	                //ay[i] = StrToFloat(StringGrid4->Cells[0][i]);
 	        }
-	        float b[20][20];
-	        Memo1->Lines->Clear();
-	        for(int i = 0; i < n; i++)
+	        //float b[20][20];
+	        //Memo1->Lines->Clear();
+	        //for(int i = 0; i < n; i++)
 	        {
-	                b[i][0] = ay[i] / ax[i][i];
-	                String str = "x" + (IntToStr)(i + 1) + " = " + FloatToStrF(b[i][0], ffGeneral, 4, 0);
-	                for(int j = 0; j < n; j++)
+	                //b[i][0] = ay[i] / ax[i][i];
+	                //String str = "x" + (IntToStr)(i + 1) + " = " + FloatToStrF(b[i][0], ffGeneral, 4, 0);
+	                //for(int j = 0; j < n; j++)
 	                {
-	                        if(i != j)
+	                        //if(i != j)
 	                        {
-	                                b[i][j + 1] = ax[i][j] / ax[i][i];
-	                                if(b[i][j + 1] > 0)
+	                                //b[i][j + 1] = ax[i][j] / ax[i][i];
+	                                //if(b[i][j + 1] > 0)
 	                                {
-	                                        str = str + "+";
+	                                        //str = str + "+";
 	                                }
-	                                str = str + FloatToStrF(b[i][j + 1], ffGeneral, 4, 0) + "x" + (j + 1);
+	                                //str = str + FloatToStrF(b[i][j + 1], ffGeneral, 4, 0) + "x" + (j + 1);
 	                        }
 	                }
-	                Memo1->Lines->Add(str);
-	                str = "";
+	                //Memo1->Lines->Add(str);
+	                //str = "";
 	        }
-	        float x[20];
-	        for(int i = 0; i < 20; i++)
+	        //float x[20];
+	        //for(int i = 0; i < 20; i++)
 	        {
-	                x[i] = 0;
+	                //x[i] = 0;
 	        }
-	        StringGrid5->ColCount = n * 2 + 1;
-	        StringGrid5->RowCount = 1;
-	        for(int i = 1; i <= n; i++)
+	        //for(int i = 1; i <= n; i++)
 	        {
-	                StringGrid5->Cells[i][0] = "x" + IntToStr(i);
-	                StringGrid5->Cells[i + n][0] = "e" + IntToStr(i);
+	                //StringGrid5->Cells[i][0] = "x" + IntToStr(i);
+	                //StringGrid5->Cells[i + n][0] = "e" + IntToStr(i);
 	        }
-	        float e[20][20];
-	        int notend = 0;
-                int ni;
-	        for(ni = 1; notend < n; ni++)
+	        //float e[20][20];
+	        //int notend = 0;
+                //int ni;
+	        //for(ni = 1; notend < n; ni++)
 	        {
-	                StringGrid5->RowCount++;
-	                StringGrid5->Cells[0][ni] = ni;
-	                for(int i = 0; i < n; i++)
+	                //StringGrid5->RowCount++;
+	                //StringGrid5->Cells[0][ni] = ni;
+	                //for(int i = 0; i < n; i++)
 	                {
-	                        x[i] = b[i][0];
-	                        for(int j = 0; j < n; j++)
+	                        //x[i] = b[i][0];
+	                        //for(int j = 0; j < n; j++)
 	                        {
-	                                if(i != j)
+	                                //if(i != j)
 	                                {
-	                                        x[i] = x[i] - b[i][j + 1] * x[j];
+	                                        //x[i] = x[i] - b[i][j + 1] * x[j];
 	                                }
 	                        }
-	                        StringGrid5->Cells[i + 1][ni] = FloatToStrF(x[i], ffGeneral, 4, 2);
+	                        //StringGrid5->Cells[i + 1][ni] = FloatToStrF(x[i], ffGeneral, 4, 2);
 	                }
-	                if(ni > 1)
+	                //if(ni > 1)
 	                {
-	                        notend = 0;
-	                        for(int i = 0; i < n; i++)
+	                        //notend = 0;
+	                        //for(int i = 0; i < n; i++)
 	                        {
-	                                StringGrid5->Cells[i + n + 1][ni] = FloatToStrF(StrToFloat(StringGrid5->Cells[i + 1][ni] - StringGrid5->Cells[i + 1][ni - 1]), ffGeneral, 8, 6);
-	                                if(fabs(StrToFloat(StringGrid5->Cells[i + n + 1][ni])) <= StrToFloat(Edit1->Text))
+	                                //StringGrid5->Cells[i + n + 1][ni] = FloatToStrF(StrToFloat(StringGrid5->Cells[i + 1][ni] - StringGrid5->Cells[i + 1][ni - 1]), ffGeneral, 8, 6);
+	                                //if(fabs(StrToFloat(StringGrid5->Cells[i + n + 1][ni])) <= StrToFloat(Edit1->Text))
 	                                {
-	                                        notend++;
-	                                        Edit2->Text = ni;
+	                                        //notend++;
+	                                        //Edit2->Text = ni;
 	                                }
 	                        }
 	                }
 	        }
-                StringGrid5->FixedRows = 1;
-                StringGrid6->ColCount = n;
-                for(int i = 1; i <= n; i++)
+                //StringGrid5->FixedRows = 1;
+                StringGrid6->ColCount = varN;
+                for(int i = 1; i <= varN; i++)
 	        {
 	                StringGrid6->Cells[i - 1][0] = "x" + IntToStr(i);
 	        }
-                for(int i = 0; i < n; i++)
+                for(int i = 0; i < varN; i++)
 	        {
-	                StringGrid6->Cells[i][1] = StringGrid5->Cells[i + 1][ni - 1];
+	                //StringGrid6->Cells[i][1] = StringGrid5->Cells[i + 1][ni - 1];
 	        }
         }
         else

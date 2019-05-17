@@ -11,8 +11,8 @@
     <DEFFILE value=""/>
     <RESDEPEN value="$(RESFILES) Unit1.dfm"/>
     <LIBFILES value=""/>
-    <LIBRARIES value=""/>
-    <SPARELIBS value="vcl.lib rtl.lib"/>
+    <LIBRARIES value="vclx.lib bcbsmp.lib rtl.lib vcl.lib"/>
+    <SPARELIBS value="vcl.lib rtl.lib bcbsmp.lib vclx.lib"/>
     <PACKAGES value="vcl.bpi rtl.bpi dbrtl.bpi adortl.bpi vcldb.bpi vclx.bpi bdertl.bpi 
       vcldbx.bpi ibxpress.bpi dsnap.bpi cds.bpi bdecds.bpi qrpt.bpi teeui.bpi 
       teedb.bpi tee.bpi dss.bpi teeqr.bpi visualclx.bpi visualdbclx.bpi 
@@ -28,15 +28,15 @@
     <RELEASELIBPATH value="$(BCB)\lib\release"/>
     <LINKER value="ilink32"/>
     <USERDEFINES value="_DEBUG"/>
-    <SYSDEFINES value="_RTLDLL;NO_STRICT;USEPACKAGES"/>
+    <SYSDEFINES value="NO_STRICT"/>
     <MAINSOURCE value="Jacobi.cpp"/>
-    <INCLUDEPATH value="$(BCB)\Projects;D:\Projects\BuilderProjects\Jacobi;$(BCB)\include;$(BCB)\include\vcl"/>
-    <LIBPATH value="$(BCB)\Projects;D:\Projects\BuilderProjects\Jacobi;$(BCB)\lib\obj;$(BCB)\lib"/>
+    <INCLUDEPATH value="$(BCB)\Projects;D:\Projects\BuilderProjects\Seidel;$(BCB)\include;$(BCB)\include\vcl"/>
+    <LIBPATH value="$(BCB)\Projects;D:\Projects\BuilderProjects\Seidel;$(BCB)\lib\obj;$(BCB)\lib"/>
     <WARNINGS value="-w-par"/>
     <OTHERFILES value=""/>
   </MACROS>
   <OPTIONS>
-    <IDLCFLAGS value="-I$(BCB)\Projects -ID:\Projects\BuilderProjects\Jacobi -I$(BCB)\include 
+    <IDLCFLAGS value="-I$(BCB)\Projects -ID:\Projects\BuilderProjects\Seidel -I$(BCB)\include 
       -I$(BCB)\include\vcl -src_suffix cpp -D_DEBUG -boa"/>
     <CFLAG1 value="-Od -H=$(BCB)\lib\vcl60.csm -Hc -Vx -Ve -X- -r- -a8 -b- -k -y -v -vi- -c 
       -tW -tWM"/>
@@ -47,9 +47,9 @@
     <OTHERFILES value=""/>
   </OPTIONS>
   <LINKER>
-    <ALLOBJ value="c0w32.obj $(PACKAGES) Memmgr.Lib sysinit.obj $(OBJFILES)"/>
+    <ALLOBJ value="c0w32.obj sysinit.obj $(OBJFILES)"/>
     <ALLRES value="$(RESFILES)"/>
-    <ALLLIB value="$(LIBFILES) $(LIBRARIES) import32.lib cp32mti.lib"/>
+    <ALLLIB value="$(LIBFILES) $(LIBRARIES) import32.lib cp32mt.lib"/>
     <OTHERFILES value=""/>
   </LINKER>
   <FILELIST>
